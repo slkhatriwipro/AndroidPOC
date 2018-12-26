@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,10 +32,15 @@ public class MainFragment extends Fragment {
     @Inject
     ViewModelFactory viewModelFactory;
 
+    @BindView(R.id.swipe_to_refresh)
+    SwipeRefreshLayout mRefreshFeed;
+
     @BindView(R.id.feeds_rv)
     RecyclerView mFeeds_rv;
 
     FeedViewModel mViewModel;
+
+    FeedsRecyclerViewAdaptar mFeedsRecyclerViewAdaptar;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -52,6 +58,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mRefreshFeed.setOnRefreshListener(() -> mViewModel.callFeedApi());
+
         mFeeds_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         mFeeds_rv.setItemAnimator(new DefaultItemAnimator());
 
@@ -65,7 +73,7 @@ public class MainFragment extends Fragment {
         switch (retrofitApiResponse.apiCallStatus) {
 
             case ONSUCCESS:
-                onSuccessResponse(retrofitApiResponse.response);
+                onSuccessFeedResponse(retrofitApiResponse.response);
                 break;
 
             case ONERROR:
@@ -77,13 +85,22 @@ public class MainFragment extends Fragment {
         }
     }
 
-    private void onSuccessResponse(JsonElement response) {
+    private void onSuccessFeedResponse(JsonElement response) {
         if (!response.isJsonNull()) {
             Log.d("Feed Response =", response.toString());
             Gson mGson = new Gson();
             FeedsModel mFeedsModel = mGson.fromJson(response, FeedsModel.class);
             ((MainActivity) getActivity()).getSupportActionBar().setTitle(mFeedsModel.getTitle());
-            mFeeds_rv.setAdapter(new FeedsRecyclerViewAdaptar(getContext(), getFragmentManager(), mFeedsModel.getRows()));
+
+            if (mFeedsRecyclerViewAdaptar == null) {
+                mFeedsRecyclerViewAdaptar = new FeedsRecyclerViewAdaptar(getContext(), getFragmentManager(), mFeedsModel.getRows());
+                mFeeds_rv.setAdapter(mFeedsRecyclerViewAdaptar);
+            } else {
+                mRefreshFeed.setRefreshing(false);
+                mFeedsRecyclerViewAdaptar.addAll(mFeedsModel.getRows());
+            }
+
+            ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(mFeedsRecyclerViewAdaptar.getItemCount() + " items");
         } else {
             Toast.makeText(getActivity(), getResources().getString(R.string.errorString), Toast.LENGTH_SHORT).show();
         }

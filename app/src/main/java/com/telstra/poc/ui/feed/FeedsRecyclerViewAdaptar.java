@@ -55,4 +55,13 @@ public class FeedsRecyclerViewAdaptar extends RecyclerView.Adapter<FeedsViewHold
     public int getItemCount() {
         return rowData.size();
     }
+
+    public void clear() {
+        rowData.clear();
+        notifyDataSetChanged();
+    }
+    public void addAll(List<Row> list) {
+        rowData.addAll(list);
+        notifyDataSetChanged();
+    }
 }
