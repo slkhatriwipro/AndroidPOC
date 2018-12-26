@@ -24,17 +24,15 @@ import com.telstra.poc.utility.ViewModelFactory;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainFragment extends Fragment {
-
     @Inject
     ViewModelFactory viewModelFactory;
 
     @BindView(R.id.feeds_rv)
     RecyclerView mFeeds_rv;
 
-    private FeedViewModel mViewModel;
+    FeedViewModel mViewModel;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -51,11 +49,9 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ButterKnife.bind(getActivity());
-        ((FeedApplication) getActivity().getApplication()).getAppComponent().doInjection((MainActivity) getActivity());
+        mViewModel = ViewModelProviders.of(getActivity(), viewModelFactory).get(FeedViewModel.class);
 
-        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(FeedViewModel.class);
-        mViewModel.feedApiResponse().observe(this, this::feedResponse);
+        mViewModel.feedApiResponse().observe(getActivity(), this::feedResponse);
         mViewModel.callFeedApi();
     }
 

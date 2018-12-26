@@ -17,7 +17,7 @@ public class FeedApplication extends Application {
         super.onCreate();
         mContext = this;
         appFeedComponent = DaggerAppFeedComponent.builder()
-                .appFeedModule(new AppFeedModule(mContext))
+                .appFeedModule(new AppFeedModule(this))
                 .utilsFeedModule(new UtilsFeedModule())
                 .build();
     }

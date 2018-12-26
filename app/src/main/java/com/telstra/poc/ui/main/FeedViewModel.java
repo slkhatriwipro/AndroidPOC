@@ -1,5 +1,6 @@
 package com.telstra.poc.ui.main;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
@@ -14,16 +15,11 @@ public class FeedViewModel extends ViewModel {
     private final CompositeDisposable mDisposable = new CompositeDisposable();
     private final MutableLiveData<RetrofitApiResponse> apiResponseMutableLiveData = new MutableLiveData<>();
 
-
-    public FeedViewModel() {
-
-    }
-
     public FeedViewModel(FeedRepository feedRepository) {
         this.feedRepository = feedRepository;
     }
 
-    public MutableLiveData<RetrofitApiResponse> feedApiResponse() {
+    public LiveData<RetrofitApiResponse> feedApiResponse() {
         return apiResponseMutableLiveData;
     }
 
