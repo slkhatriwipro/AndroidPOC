@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    app:cardBackgroundColor="@color/overlay"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp"
-    app:contentPadding="4dp">
+    android:layout_margin="3dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="2dp"
+    app:contentPadding="0dp">
 
     <RelativeLayout
         android:id="@+id/feed_rl"
+        android:background="@drawable/view_gradient"
         android:layout_width="match_parent"
+        android:padding="5dp"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.AppCompatTextView
@@ -26,6 +27,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_below="@+id/feed_title_txt"
             android:gravity="center_vertical">
 
@@ -45,8 +47,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="0dp"
-                android:src="@android:drawable/ic_menu_save" />
+                android:layout_marginEnd="0dp" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:visibility="invisible"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
 
 

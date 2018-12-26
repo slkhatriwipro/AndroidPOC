@@ -1,4 +1,4 @@
-package com.telstra.poc.ui.main;
+package com.telstra.poc.ui.feed;
 
 import com.google.gson.JsonElement;
 import com.telstra.poc.network.IRetrofitApi;

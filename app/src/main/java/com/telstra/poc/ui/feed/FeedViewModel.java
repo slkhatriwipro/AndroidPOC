@@ -1,4 +1,4 @@
-package com.telstra.poc.ui.main;
+package com.telstra.poc.ui.feed;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;

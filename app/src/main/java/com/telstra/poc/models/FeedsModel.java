@@ -3,6 +3,7 @@ package com.telstra.poc.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FeedsModel {
@@ -12,7 +13,7 @@ public class FeedsModel {
 
     @SerializedName("rows")
     @Expose
-    private List<Row> rows = null;
+    private List<Row> rows = new ArrayList<>();
 
     public String getTitle() {
         return title;

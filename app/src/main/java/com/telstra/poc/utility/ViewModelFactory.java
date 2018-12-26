@@ -4,8 +4,8 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
-import com.telstra.poc.ui.main.FeedRepository;
-import com.telstra.poc.ui.main.FeedViewModel;
+import com.telstra.poc.ui.feed.FeedRepository;
+import com.telstra.poc.ui.feed.FeedViewModel;
 
 import javax.inject.Inject;
 
